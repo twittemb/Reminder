@@ -2,6 +2,36 @@
 
 import Foundation
 
+
+/// Conditional conformance to help Optional and Array be Evenable if they wrap Integers
+protocol Evenable {
+    var isEven: Bool { get }
+}
+
+extension Optional: Evenable where Wrapped == Int {
+    var isEven: Bool {
+        return self.map({ (value) -> Bool in
+            value % 2 == 0
+        }) ?? false
+    }
+}
+
+extension Array: Evenable where Element == Int {
+    var isEven: Bool {
+        return self.reduce(0) { (previous, current) -> Int in
+            return previous + current
+        } % 2 == 0
+    }
+}
+
+let optionalInt: Int? = 5
+let arrayOfInts = [1, 2, 3, 5, 5]
+
+let evenables: [Evenable] = [optionalInt, arrayOfInts]
+evenables.forEach { (element) in
+    print ("The element is even ? \(element.isEven)")
+}
+
 /// Simply conform Array to a custom protocol that sums its content only if element are Int
 protocol Summable {
     func sum () -> Int
@@ -74,5 +104,6 @@ extension Hero: IronMan where SuperPowerType == Flying {
 
 let tony = Hero<Flying>(power: Flying())
 print ("My name, as a Flying Super Hero is \(tony.name)")
+
 
 //: [Next](@next)
