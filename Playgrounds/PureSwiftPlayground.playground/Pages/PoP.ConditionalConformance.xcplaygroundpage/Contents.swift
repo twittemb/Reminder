@@ -2,6 +2,53 @@
 
 import Foundation
 
+/// First: every kind of extension, just to make a abstract
+
+/// Basic type extension
+extension String {
+    func numberOf (letter: Character) -> Int {
+        return self.filter { $0 == letter }.count
+    }
+
+    static func build (withNumberOfSpaces spaces: Int) -> String {
+        return [Int](1...spaces).reduce("", { (previous, _) -> String in
+            return previous + " "
+        })
+    }
+}
+
+let blog = "twittemb.github.io"
+let emptySpaces = String.build(withNumberOfSpaces: 10)
+
+print (blog.numberOf(letter: "t"))
+print ("|\(emptySpaces)|")
+
+/// Basic type extension with Conformance to a Protocol
+protocol Resettable {
+    func reset () -> Self
+}
+
+extension String: Resettable {
+    func reset() -> String {
+        return ""
+    }
+}
+
+extension Int: Resettable {
+    func reset() -> Int {
+        return 0
+    }
+}
+
+let resettables: [Resettable] = ["Wittemberg", 38]
+print ("\(resettables)")
+
+let reset = resettables.map { $0.reset() }
+print ("\(reset)")
+
+/// Protocol extension
+
+
 
 /// Conditional conformance to help Optional and Array be Evenable if they wrap Integers
 protocol Evenable {
