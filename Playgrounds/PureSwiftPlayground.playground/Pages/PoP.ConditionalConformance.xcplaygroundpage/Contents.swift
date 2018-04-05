@@ -1,10 +1,16 @@
 //: [Previous](@previous)
 
 import Foundation
+import RxSwift
 
-/// First: every kind of extension, just to make a abstract
+/// First: every kind of extension, just to make a reminder
 
-/// Basic type extension
+///////////////////
+/// Basic extension
+///////////////////
+
+print ("------------------ Basic extension ------------------")
+
 extension String {
     func numberOf (letter: Character) -> Int {
         return self.filter { $0 == letter }.count
@@ -20,10 +26,43 @@ extension String {
 let blog = "twittemb.github.io"
 let emptySpaces = String.build(withNumberOfSpaces: 10)
 
-print (blog.numberOf(letter: "t"))
-print ("|\(emptySpaces)|")
+print ("Number of letters: \(blog.numberOf(letter: "t"))")
+print ("Built String: |\(emptySpaces)|")
 
-/// Basic type extension with Conformance to a Protocol
+print ("")
+
+/////////////////////////
+/// Conditional extension
+/////////////////////////
+
+print ("------------------ Conditional extension ------------------")
+
+extension Array where Element: Numeric {
+    func sum () -> Element {
+        return self.reduce (0, +)
+    }
+}
+
+let numerics = [1, 2, 3, 4, 5.5]
+print ("Sum of elements in \(numerics): \(numerics.sum())")
+
+extension Optional where Wrapped == Int {
+    var evenOptional: Optional<Bool> {
+        return self.map { $0 % 2 == 0 }
+    }
+}
+
+let optionalInteger: Int? = 3
+print ("Integer \(optionalInteger) is even ? \(optionalInteger.evenOptional)")
+
+print ("")
+
+////////////////////////
+/// Protocol Conformance
+////////////////////////
+
+print ("------------------ Protocol conformance ------------------")
+
 protocol Resettable {
     func reset () -> Self
 }
@@ -40,60 +79,42 @@ extension Int: Resettable {
     }
 }
 
-let resettables: [Resettable] = ["Wittemberg", 38]
-print ("\(resettables)")
+extension Optional: Resettable {
+    func reset() -> Optional<Wrapped> {
+        return nil
+    }
+}
+
+let name = "Spock"
+let age = 120
+let isVulcan: Bool? = true
+
+let resettables: [Resettable] = ["Spock", 120 , isVulcan]
+print ("Array before reset: \(resettables)")
 
 let reset = resettables.map { $0.reset() }
-print ("\(reset)")
+print ("Array after reset: \(reset)")
 
-/// Protocol extension
+print ("")
 
+//////////////////////////////////////////////////////////////////////////
+/// Conditional Conformance = Protocol Conformance + Conditional Extension
+//////////////////////////////////////////////////////////////////////////
 
+print ("------------------ Conditional conformance ------------------")
 
-/// Conditional conformance to help Optional and Array be Evenable if they wrap Integers
-protocol Evenable {
-    var isEven: Bool { get }
-}
-
-extension Optional: Evenable where Wrapped == Int {
-    var isEven: Bool {
-        return self.map({ (value) -> Bool in
-            value % 2 == 0
-        }) ?? false
+// a first usage: make a superset conform to the same protocol as its elements (another kind of recursion)
+extension Array: Resettable where Element == Resettable {
+    func reset() -> Array<Element> {
+        return self.map { $0.reset() }
     }
 }
 
-extension Array: Evenable where Element == Int {
-    var isEven: Bool {
-        return self.reduce(0) { (previous, current) -> Int in
-            return previous + current
-        } % 2 == 0
-    }
-}
+let innerResettableArray: [Resettable] = ["Spock", 120]
+let resettableArray: [Resettable] = ["Kirk", 45, Optional<Bool>(true), innerResettableArray]
+print ("Array before reset: \(resettableArray)")
+print ("Array after reset: \(resettableArray.reset())")
 
-let optionalInt: Int? = 5
-let arrayOfInts = [1, 2, 3, 5, 5]
-
-let evenables: [Evenable] = [optionalInt, arrayOfInts]
-evenables.forEach { (element) in
-    print ("The element is even ? \(element.isEven)")
-}
-
-/// Simply conform Array to a custom protocol that sums its content only if element are Int
-protocol Summable {
-    func sum () -> Int
-}
-
-extension Array: Summable where Element == Int {
-    func sum() -> Int {
-        return self.reduce(0, { (previous, current) -> Int in
-            return previous + current
-        })
-    }
-}
-
-let arrayOfInt = [1, 2, 3, 4, 5]
-print ("Array of Int is Summable with sum = \(arrayOfInt.sum())")
 
 /// Simply conform Array to a custom protocol that sums its content only if element are Int
 /// The protocol is generic so the sum result type will adapt according to the Element type of the array
@@ -102,55 +123,15 @@ protocol GenericSummable {
     func genericSum () -> T
 }
 
-extension Array: GenericSummable where Element == Double {
-    typealias T = Double
+extension Array: GenericSummable where Element: Numeric {
+    typealias T = Element
 
-    func genericSum() -> Double {
-        return self.reduce(0, { (previous, current) -> Double in
-            return previous + current
-        })
+    func genericSum() -> Element {
+        return self.reduce(0, +)
     }
 }
 
 let arrayOfDouble = [1.1, 2.2, 3.3, 4.4, 5.5]
 print ("Array of Double is Summable with sum = \(arrayOfDouble.genericSum())")
-
-/// Completely custom
-
-protocol SuperPower {
-    var canFly: Bool { get }
-    var canRun: Bool { get }
-}
-
-struct Flying: SuperPower {
-    let canFly = true
-    let canRun = false
-}
-
-struct Running: SuperPower {
-    let canFly = false
-    let canRun = true
-}
-
-struct Hero<SuperPowerType: SuperPower> {
-    let power: SuperPower
-}
-
-protocol IronMan {
-    var name: String { get }
-}
-
-extension IronMan {
-    var name: String {
-        return "Tony Stark"
-    }
-}
-
-extension Hero: IronMan where SuperPowerType == Flying {
-}
-
-let tony = Hero<Flying>(power: Flying())
-print ("My name, as a Flying Super Hero is \(tony.name)")
-
 
 //: [Next](@next)
