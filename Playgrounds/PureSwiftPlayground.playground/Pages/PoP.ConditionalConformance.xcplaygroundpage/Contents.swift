@@ -103,7 +103,9 @@ print ("")
 
 print ("------------------ Conditional conformance ------------------")
 
-// a first usage: make a superset conform to the same protocol as its elements (another kind of recursion)
+/// a first usage: make a superset conform to the same protocol as its elements (another kind of recursion)
+print ("--- first usage: make everyone conform to Resettable")
+
 extension Array: Resettable where Element == Resettable {
     func reset() -> Array<Element> {
         return self.map { $0.reset() }
@@ -115,23 +117,85 @@ let resettableArray: [Resettable] = ["Kirk", 45, Optional<Bool>(true), innerRese
 print ("Array before reset: \(resettableArray)")
 print ("Array after reset: \(resettableArray.reset())")
 
+print ("")
 
-/// Simply conform Array to a custom protocol that sums its content only if element are Int
-/// The protocol is generic so the sum result type will adapt according to the Element type of the array
-protocol GenericSummable {
-    associatedtype T
-    func genericSum () -> T
+/// a second usage: Ease the use of a design pattern such as Visitor
+print ("--- second usage: Ease the use of a design pattern such as Visitor")
+
+protocol Visitor {
+    func visit (visitable: Visitable)
 }
 
-extension Array: GenericSummable where Element: Numeric {
-    typealias T = Element
+protocol Visitable {
+    func accept (visitor: Visitor)
+}
 
-    func genericSum() -> Element {
-        return self.reduce(0, +)
+struct Person {
+    let name: String
+    let age: Int
+}
+
+struct Car {
+    let isElectric: Bool
+    let model: String
+    let price: Double
+}
+
+extension Person: Visitable {
+    func accept (visitor: Visitor) {
+        if self.age > 30 {
+            visitor.visit(visitable: self)
+        }
     }
 }
 
-let arrayOfDouble = [1.1, 2.2, 3.3, 4.4, 5.5]
-print ("Array of Double is Summable with sum = \(arrayOfDouble.genericSum())")
+extension Car: Visitable {
+    func accept (visitor: Visitor) {
+        if self.isElectric {
+            visitor.visit(visitable: self)
+        }
+    }
+}
+
+extension Array: Visitable where Element == Visitable {
+    func accept (visitor: Visitor) {
+        self.forEach { $0.accept(visitor: visitor) }
+    }
+}
+
+extension Dictionary: Visitable where Value == Visitable {
+    func accept (visitor: Visitor) {
+        self.values.forEach { $0.accept(visitor: visitor) }
+    }
+}
+
+class AnyVisitor: Visitor {
+    func visit (visitable: Visitable) {
+        switch visitable {
+        case let person as Person:
+            print ("\(person.name) is \(person.age) years old")
+        case let car as Car:
+            print ("\(car.model)'s price is \(car.price)$")
+        default:
+            print (visitable)
+        }
+    }
+}
+
+let ironman = Person(name: "Tony Stark", age: 45)
+let hulk = Person(name: "Bruce Banner", age: 40)
+let captain = Person(name: "Steve Rogers", age: 29)
+let spiderman = Person(name: "Peter Parker", age: 16)
+
+let tesla = Car(isElectric: true, model: "Roadster", price: 120000)
+let porsche = Car(isElectric: false, model: "911", price: 250000)
+let ferrari = Car(isElectric: false, model: "GTO", price: 1000000)
+let nissan = Car(isElectric: true, model: "Leaf", price: 30000)
+
+let arrayToVisit: [Visitable] = [ironman, spiderman, tesla, porsche]
+let dictionnaryToVisit: [String: Visitable] = ["key1": hulk, "key2": captain, "key3": ferrari, "key4": nissan, "key5": arrayToVisit]
+
+let anyVisitor = AnyVisitor()
+dictionnaryToVisit.accept(visitor: anyVisitor)
 
 //: [Next](@next)
