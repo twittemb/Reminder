@@ -86,4 +86,20 @@ func palindromeIteratif (input: String) -> Bool {
 
 print (palindromeIteratif(input: "nurun"))
 
+func fizzBuzz (input: [Int]) -> String {
+    return input.map({ (value) -> String in
+        if value % 3 == 0 {
+            return "fizz"
+        }
+
+        if value % 5 == 0 {
+            return "buzz"
+        }
+
+        return "\(value)"
+    }).reduce("", { "\($0),\($1)" })
+}
+
+print (fizzBuzz(input: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]))
+
 //: [Next](@next)

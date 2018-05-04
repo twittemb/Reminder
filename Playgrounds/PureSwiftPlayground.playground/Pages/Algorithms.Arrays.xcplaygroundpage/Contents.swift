@@ -69,13 +69,4 @@ func climbingLeaderboard(scores: [Int], alice: [Int]) -> [Int]{
 
 print (climbingLeaderboard(scores: [100, 100, 50, 40, 40, 20, 10], alice: [5, 5, 25, 50, 120, 120]))
 
-func Hanoi (nbDisks: Int, from: Int, to: Int) {
-    guard nbDisks > 0 else { return }
-    Hanoi(nbDisks: nbDisks-1, from: from, to: 3-(from+to))
-    print ("Move 1 disque from \(from) to \(to)")
-    Hanoi(nbDisks: nbDisks-1, from: 3-(from+to), to: to)
-}
-
-Hanoi (nbDisks: 30, from: 0, to: 2)
-
 //: [Next](@next)
