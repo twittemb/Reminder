@@ -24,7 +24,7 @@ print (unwrapped4)
 
 let array1 = [1, 2, 3, nil, 5]
 let array1WithoutNil1 = array1.map { $0 }
-let array1WithoutNil2 = array1.compactMap { $0 }
+let array1WithoutNil2 = array1.compactMap { $0 }.map { $0 * $0 }
 
 print (array1WithoutNil1)
 print (array1WithoutNil2)
@@ -32,7 +32,7 @@ print (array1WithoutNil2)
 let array2 = [[1, 2, 3], [4, 5], nil, [6, 7, 8]]
 let array2WithoutNil1 = array2.map { $0 }
 let array2WithoutNil2 = array2.compactMap { $0 }
-let array2WithoutNil3 = array2.flatMap { $0 }.flatMap { $0 }
+let array2WithoutNil3 = array2.compactMap { $0 }.flatMap { $0 }
 
 print (array2WithoutNil1)
 print (array2WithoutNil2)

@@ -9,5 +9,11 @@
         <page name='Pattern.NameSpace'/>
         <page name='PoP.ConditionalConformance'/>
         <page name='PatternMatching'/>
+        <page name='MutableProtocol'/>
+        <page name='Algorithms.Sort'/>
+        <page name='Algorithms.Compression'/>
+        <page name='Algorithms.NSums'/>
+        <page name='Algorithms.Arrays'/>
+        <page name='Algorithms.Strings'/>
     </pages>
 </playground>

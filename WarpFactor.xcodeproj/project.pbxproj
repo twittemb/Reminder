@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1A403FE420704AC800BE698F /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A403FE220704AC800BE698F /* RxCocoa.framework */; };
 		1A403FE520704AC800BE698F /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A403FE320704AC800BE698F /* RxSwift.framework */; };
+		1AAA7E5A2097D98300BED242 /* Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AAA7E592097D98300BED242 /* Sort.swift */; };
 		1AF132962070406700BB88C4 /* WarpFactor.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AF132942070406700BB88C4 /* WarpFactor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -34,6 +35,7 @@
 		1A403FE320704AC800BE698F /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		1A40402320704E5000BE698F /* libPureSwiftPlayground.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPureSwiftPlayground.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AAA36832070539800F7FFE1 /* libRxSwiftPlayground.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRxSwiftPlayground.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AAA7E592097D98300BED242 /* Sort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sort.swift; sourceTree = "<group>"; };
 		1AF132912070406700BB88C4 /* WarpFactor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WarpFactor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AF132942070406700BB88C4 /* WarpFactor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WarpFactor.h; sourceTree = "<group>"; };
 		1AF132952070406700BB88C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 			children = (
 				1AF132942070406700BB88C4 /* WarpFactor.h */,
 				1AF132952070406700BB88C4 /* Info.plist */,
+				1AAA7E592097D98300BED242 /* Sort.swift */,
 			);
 			path = WarpFactor;
 			sourceTree = "<group>";
@@ -171,6 +174,7 @@
 					};
 					1AF132902070406700BB88C4 = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 0930;
 					};
 				};
 			};
@@ -237,6 +241,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AAA7E5A2097D98300BED242 /* Sort.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,6 +436,7 @@
 		1AF1329A2070406700BB88C4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -452,6 +458,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.warpfactor.WarpFactor;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -460,6 +467,7 @@
 		1AF1329B2070406700BB88C4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
