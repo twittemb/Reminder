@@ -68,61 +68,8 @@ func climbingLeaderboard(scores: [Int], alice: [Int]) -> [Int]{
 
 print (climbingLeaderboard(scores: [100, 100, 50, 40, 40, 20, 10], alice: [5, 5, 25, 50, 120, 120]))
 
-func calculateBetweenTwoPics (input: [Int]) -> Int {
-    let minOfMaxes = input.first! < input.last! ? input.first! : input.last!
-    let maxOfMaxes = input.first! > input.last! ? input.first! : input.last!
-
-    var result = 0
-
-    input.forEach { (value) in
-        if value < maxOfMaxes {
-            result += minOfMaxes - value
-        }
-    }
-
-    return result
-}
-
-func pickTwoPics (input: [Int]) -> [Int] {
-    // trouver les 2 pics non collés
-
-    var mutableArray = input
-    var max1 = 0
-    var indexMax1 = 0
-    var max2 = 0
-    var indexMax2 = 0
-
-    for i in 0..<mutableArray.count {
-        let value = mutableArray[i]
-        if value > max1 {
-            max1 = value
-            indexMax1 = i
-        }
-    }
-
-    mutableArray[indexMax1] = 0
-
-    for i in 0..<mutableArray.count {
-        let value = mutableArray[i]
-        if value > max2 {
-            max2 = value
-            indexMax2 = i
-        }
-    }
-
-    mutableArray[indexMax2] = 0
-
-    let range = indexMax1 < indexMax2 ? indexMax1...indexMax2 : indexMax2...indexMax1
-
-    let slice = input[range]
-    print (slice)
-    return Array(slice)
-
-}
-
-print(calculateBetweenTwoPics(input: pickTwoPics(input: [2, 7, 1, 8, 4, 6, 10])))
-
 func binarySearchRecursif (input: [Int], target: Int, fromIndex: Int, toIndex: Int) -> Int {
+
     let pivotIndex = (fromIndex + toIndex) / 2
     let pivotValue = input[pivotIndex]
 
@@ -130,21 +77,47 @@ func binarySearchRecursif (input: [Int], target: Int, fromIndex: Int, toIndex: I
         return pivotIndex
     }
 
+    if fromIndex == toIndex {
+        return -1
+    }
+
     if target < pivotValue {
-        return binarySearchRecursif(input: input, target: target, fromIndex: fromIndex, toIndex: pivotIndex)
+        return binarySearchRecursif(input: input, target: target, fromIndex: fromIndex, toIndex: pivotIndex-1)
     } else {
-        return binarySearchRecursif(input: input, target: target, fromIndex: pivotIndex, toIndex: toIndex)
+        return binarySearchRecursif(input: input, target: target, fromIndex: pivotIndex+1, toIndex: toIndex)
     }
 
     return -1
 }
 
-let input = [1, 4, 8, 10, 15, 34, 50, 60]
-print (binarySearchRecursif(input: input, target: 35, fromIndex: 0, toIndex: input.count))
+let sortedInput = [5, 5, 25, 50, 120, 125]
+print ("binarySearchRecursif")
+print (binarySearchRecursif(input: sortedInput, target: 5, fromIndex: 0, toIndex: sortedInput.count-1))
 
 func binarySearchIteratif (input: [Int], target: Int) -> Int {
-    
+
+    var leftIndex = 0
+    var rightIndex = input.count-1
+
+    while leftIndex <= rightIndex {
+
+        let pivotIndex = (leftIndex + rightIndex) / 2
+        let pivotValue = input[pivotIndex]
+
+        if pivotValue == target {
+            return pivotIndex
+        }
+
+        if target > pivotValue {
+            leftIndex = pivotIndex+1
+        } else {
+            rightIndex = pivotIndex-1
+        }
+    }
 
     return -1
 }
+print ("binarySearchIteratif")
+print (binarySearchIteratif(input: sortedInput, target: 5))
+
 //: [Next](@next)
