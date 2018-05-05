@@ -15,5 +15,6 @@
         <page name='Algorithms.NSums'/>
         <page name='Algorithms.Arrays'/>
         <page name='Algorithms.Strings'/>
+        <page name='Algorithms.Combi'/>
     </pages>
 </playground>

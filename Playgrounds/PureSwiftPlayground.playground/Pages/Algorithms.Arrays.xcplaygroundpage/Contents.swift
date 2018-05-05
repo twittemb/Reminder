@@ -18,7 +18,6 @@ let input = [1, 2, 3, 4, 5, 6, 7, 8]
 let output = shiftArray(input: input, shift: -2)
 print (output)
 
-
 func climbingLeaderboard(scores: [Int], alice: [Int]) -> [Int]{
 
     var result = [Int]()
@@ -123,4 +122,29 @@ func pickTwoPics (input: [Int]) -> [Int] {
 
 print(calculateBetweenTwoPics(input: pickTwoPics(input: [2, 7, 1, 8, 4, 6, 10])))
 
+func binarySearchRecursif (input: [Int], target: Int, fromIndex: Int, toIndex: Int) -> Int {
+    let pivotIndex = (fromIndex + toIndex) / 2
+    let pivotValue = input[pivotIndex]
+
+    if pivotValue == target {
+        return pivotIndex
+    }
+
+    if target < pivotValue {
+        return binarySearchRecursif(input: input, target: target, fromIndex: fromIndex, toIndex: pivotIndex)
+    } else {
+        return binarySearchRecursif(input: input, target: target, fromIndex: pivotIndex, toIndex: toIndex)
+    }
+
+    return -1
+}
+
+let input = [1, 4, 8, 10, 15, 34, 50, 60]
+print (binarySearchRecursif(input: input, target: 35, fromIndex: 0, toIndex: input.count))
+
+func binarySearchIteratif (input: [Int], target: Int) -> Int {
+    
+
+    return -1
+}
 //: [Next](@next)

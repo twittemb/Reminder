@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Playgrounds/PureSwiftPlayground.playground">
+      location = "group:/Users/thibaultwittemberg/Development/WarpFactor/Playgrounds/PureSwiftPlayground.playground">
    </FileRef>
    <FileRef
       location = "group:Playgrounds/RxSwiftPlayground.playground">
