@@ -92,7 +92,7 @@ func binarySearchRecursif (input: [Int], target: Int, fromIndex: Int, toIndex: I
 
 let sortedInput = [5, 5, 25, 50, 120, 125]
 print ("binarySearchRecursif")
-print (binarySearchRecursif(input: sortedInput, target: 5, fromIndex: 0, toIndex: sortedInput.count-1))
+print (binarySearchRecursif(input: sortedInput, target: 50, fromIndex: 0, toIndex: sortedInput.count-1))
 
 func binarySearchIteratif (input: [Int], target: Int) -> Int {
 
@@ -118,6 +118,34 @@ func binarySearchIteratif (input: [Int], target: Int) -> Int {
     return -1
 }
 print ("binarySearchIteratif")
-print (binarySearchIteratif(input: sortedInput, target: 5))
+print (binarySearchIteratif(input: sortedInput, target: 120))
+
+func rainAmount (input: [Int]) -> Int {
+    // from left to right
+    var leftToRight = [Int](0..<input.count)
+    leftToRight[0] = input[0]
+    for i in 1..<input.count{
+        leftToRight[i] = input[i] > leftToRight[i-1] ? input[i] : leftToRight[i-1]
+    }
+    // from right to left
+    var rightToLeft = [Int](0..<input.count)
+    rightToLeft[input.count-1] = input[input.count-1]
+
+    for i in 0..<input.count-1 {
+        let index = (input.count-2-i)
+        rightToLeft[index] = input[index] > rightToLeft[index+1] ? input[index] : rightToLeft[index+1]
+    }
+
+    // sum
+    var result = 0
+    for i in 0..<input.count {
+        let minValue = leftToRight[i] < rightToLeft[i] ? leftToRight[i] : rightToLeft[i]
+        result += minValue - input[i]
+    }
+
+    return result
+}
+
+print (rainAmount(input: [1, 0, 2, 1, 3, 5, 3, 0, 3, 0, 2, 1]))
 
 //: [Next](@next)
