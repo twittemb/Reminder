@@ -107,14 +107,3 @@ public func treeSort (input: [Int]) -> [Int] {
     // parcours de l'arbre
     return printNode(node: root)
 }
-
-public func combi (input: [Int]) -> [[Int]] {
-    var mutableInput = input
-    var result = [[Int]]()
-    for _ in 0..<input.count {
-        let value = mutableInput.removeFirst()
-        result.append([value]+combi(input: mutableInput).flatMap { $0 })
-    }
-
-    return result
-}

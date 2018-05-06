@@ -9,25 +9,40 @@
 import Foundation
 
 
-func to24 (input: String) -> String {
-    let timeItems = input.split(separator: ":")
-    let hour = timeItems[0]
-    let minute = timeItems[1]
-    let second = timeItems[2].prefix(2)
-    let indicator = timeItems[2].suffix(2)
+func makeChangeRecursif (target: Int, coins: [Int]) -> [[Int]] {
 
-    if indicator == "AM" {
-        // morning
-        if hour == "12" {
-            return "00:\(minute):\(second)"
-        }
-    } else if indicator == "PM" {
-        if hour == "12" {
-            return "12:\(minute):\(second)"
-        }
-        let newHour = Int(hour)!+12
-        return "\(newHour):\(minute):\(second)"
+    if target < 0 {
+        return [[Int]]()
     }
 
-    return "Error"
+    for i in 0..<coins.count {
+        let coin = coins[i]
+        let rest = target - coin
+
+        print ("coins=\(coins) target=\(target) coin=\(coin) rest=\(rest)")
+
+        if rest < 0 {
+            let result = [[Int]]()
+            return result
+        }
+
+        if rest == 0 {
+            var result = [[Int]]()
+            result.append([coin])
+            return result
+        }
+
+        if rest - coin >= coin {
+            var result = [[Int]]()
+            result.append([coin])
+            return result + makeChangeRecursif(target: rest, coins: coins)
+        } else {
+            var result = [[Int]]()
+            result.append([coin])
+            return result + makeChangeRecursif(target: rest, coins: Array(coins[1...]))
+        }
+    }
+
+    return [[Int]]()
+
 }

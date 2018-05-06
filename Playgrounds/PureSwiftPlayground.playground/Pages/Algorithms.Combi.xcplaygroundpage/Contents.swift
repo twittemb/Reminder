@@ -33,64 +33,91 @@ func Hanoi (nbDisks: Int, from: Int, to: Int) {
 
 Hanoi (nbDisks: 3, from: 0, to: 2)
 
-func makeChangeIteratif (value: Int, coins: [Int], reusableCoin: Bool = false) -> [Int]{
-    let sortedCoins = Array(coins.sorted().reversed())
+func fibonacciRecursif (n: Int) -> Int {
 
-    var result = [Int]()
-    var rest = value
+    if n <= 0 {
+        return 1
+    }
 
-    var coinsIndex = 0
-    while coinsIndex < coins.count {
+    if n == 1 {
+        return 1
+    }
 
-        print ("rest=\(rest) coinsIndex=\(coinsIndex) sortedCoins[coinsIndex]=\(sortedCoins[coinsIndex])")
+    return fibonacciRecursif(n: n-2) + fibonacciRecursif(n: n-1)
+}
 
-        if (rest-sortedCoins[coinsIndex]) >= 0 {
-            rest -= sortedCoins[coinsIndex]
-            result.append(sortedCoins[coinsIndex])
-            if !reusableCoin {
-                coinsIndex += 1
-            }
+print ("fibonacciRecursif: \(fibonacciRecursif(n: 10))")
+
+func fibonacciDynamic (n: Int) -> CLong {
+    var results = [CLong](0...n)
+
+    results[0] = 1
+    results[1] = 1
+
+    for i in 2...n {
+        results[i] = results[i-2] + results[i-1]
+    }
+
+    return results[n]
+}
+
+print ("fibonacciDynamic: \(fibonacciDynamic(n: 91))")
+
+func makeChangeRecursif (target: Int, coins: [Int], currentStackOfCoins: [Int] = [Int]()) -> Int {
+
+    if target < 0 {
+        return 0
+    }
+
+    var solutions = 0
+
+    for i in 0..<coins.count {
+
+        let coin = coins[i]
+
+        let rest = target - coin
+
+        if rest < 0 {
+            continue
+        }
+
+        if rest == 0 {
+            solutions += 1
+            print ("1 Solution -> \(currentStackOfCoins+[coin])")
+            continue
+        }
+
+        if rest - coin >= 0 {
+            solutions += makeChangeRecursif(target: rest, coins: Array(coins[i...]), currentStackOfCoins: currentStackOfCoins+[coin])
         } else {
-            coinsIndex += 1
+            solutions += makeChangeRecursif(target: rest, coins: Array(coins[1...]), currentStackOfCoins: currentStackOfCoins+[coin])
         }
-
     }
 
-    if rest == 0 {
-        return result
+    return solutions
+
+}
+print(makeChangeRecursif(target: 10, coins: [1, 2, 4].sorted().reversed()))
+
+func countChangeDynamic (value: Int, coins: [Int]) -> Int {
+    var ways = [Int](0...value)
+    for i in 1..<ways.count {
+        ways[i] = 0
     }
 
-    return [-1]
+    ways[0] = 1
+//    print (ways)
+
+    coins.forEach { (coin) in
+        for i in coin...value {
+            ways[i] += ways[i-coin]
+//            print (ways)
+        }
+    }
+
+    return ways[value]
 }
 
-print (makeChangeIteratif(value: 20, coins: [5, 1], reusableCoin: true))
-
-func makeChangeRecursif (value: Int, coins: [Int]) -> [Int] {
-
-    if coins.count == 0 {
-        if value != 0 {
-            return [-1]
-        }
-        return [Int]()
-    }
-
-    let rest = value
-
-    if (rest-coins[0]) == 0 {
-        return [coins[0]]
-    }
-
-    if (rest-coins[0]) > 0 {
-        return [coins[0]] + makeChangeRecursif(value: rest-coins[0], coins: coins)
-    }
-
-    if (rest-coins[0]) < 0 {
-        return makeChangeRecursif(value: rest, coins: Array(coins.dropFirst()))
-    }
-
-    return [-1]
-}
-
-print (makeChangeRecursif(value: 20, coins: [1, 3, 2].sorted().reversed()))
+print (countChangeDynamic(value: 10, coins: [1, 2, 4].sorted()))
 
 //: [Next](@next)

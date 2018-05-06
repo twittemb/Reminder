@@ -148,4 +148,5 @@ func rainAmount (input: [Int]) -> Int {
 
 print (rainAmount(input: [1, 0, 2, 1, 3, 5, 3, 0, 3, 0, 2, 1]))
 
+
 //: [Next](@next)
