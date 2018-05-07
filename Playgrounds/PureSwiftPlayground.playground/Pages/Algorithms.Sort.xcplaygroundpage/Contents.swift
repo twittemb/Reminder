@@ -12,6 +12,10 @@ execute(name: "Quick", input: inputArray) { (input) -> [Int] in
     return quickSort(input: input)
 }
 
+execute(name: "Merge", input: inputArray) { (input) -> [Int] in
+    return mergeSort(input: input)
+}
+
 execute(name: "Tree", input: inputArray) { (input) -> [Int] in
     return treeSort(input: input)
 }

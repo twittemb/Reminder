@@ -93,7 +93,7 @@ func makeChangeRecursif (target: Int, coins: [Int], currentStackOfCoins: [Int] =
 
 //        print ("coins=\(coins) target=\(target) coin=\(coin) rest=\(rest)")
 
-        if target > 0 && rest < 0 {
+        if target < 0 /*&& rest < 0*/ {
             continue
         }
 
@@ -103,17 +103,17 @@ func makeChangeRecursif (target: Int, coins: [Int], currentStackOfCoins: [Int] =
             continue
         }
 
-        if rest >= target {
-            solutions += makeChangeRecursif(target: rest, coins: Array(coins[(i+1)...]), currentStackOfCoins: currentStackOfCoins+[coins[i]])
-        } else {
+//        if rest >= target {
+//            solutions += makeChangeRecursif(target: rest, coins: Array(coins[(i+1)...]), currentStackOfCoins: currentStackOfCoins+[coins[i]])
+//        } else {
             solutions += makeChangeRecursif(target: rest, coins: Array(coins[i...]), currentStackOfCoins: currentStackOfCoins+[coins[i]])
-        }
+//        }
     }
 
     return solutions
 
 }
-print(makeChangeRecursif(target: 15, coins: [-10, 9, 4, -3, 2, 6, 8]))
+print(makeChangeRecursif(target: 15, coins: [10, 9, 4, 3, 2, 6, 8]))
 
 ///////////////////////////////
 /// Nombre de facon de rendre la monnaie (sans affichage des combinaisons) en programmation dynamique
@@ -138,6 +138,6 @@ func countChangeDynamic (value: Int, coins: [Int]) -> Int {
     return ways[value]
 }
 
-print (countChangeDynamic(value: 10, coins: [1, 2, 4].sorted()))
+print (countChangeDynamic(value: 15, coins: [10, 9, 4, 3, 2, 6, 8].sorted()))
 
 //: [Next](@next)

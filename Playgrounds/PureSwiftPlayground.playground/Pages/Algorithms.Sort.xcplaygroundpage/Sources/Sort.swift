@@ -15,6 +15,60 @@ public func execute (name: String, input: [Int], algorithm: ([Int]) -> [Int]) {
 /// INSERTION SORT
 ///////////////////////////////
 
+func merge(leftPile: [Int], rightPile: [Int]) -> [Int] {
+    // 1
+    var leftIndex = 0
+    var rightIndex = 0
+
+    // 2
+    var orderedPile = [Int]()
+
+    // 3
+    while leftIndex < leftPile.count && rightIndex < rightPile.count {
+        if leftPile[leftIndex] < rightPile[rightIndex] {
+            orderedPile.append(leftPile[leftIndex])
+            leftIndex += 1
+        } else if leftPile[leftIndex] > rightPile[rightIndex] {
+            orderedPile.append(rightPile[rightIndex])
+            rightIndex += 1
+        } else {
+            orderedPile.append(leftPile[leftIndex])
+            leftIndex += 1
+            orderedPile.append(rightPile[rightIndex])
+            rightIndex += 1
+        }
+    }
+
+    // 4
+    while leftIndex < leftPile.count {
+        orderedPile.append(leftPile[leftIndex])
+        leftIndex += 1
+    }
+
+    while rightIndex < rightPile.count {
+        orderedPile.append(rightPile[rightIndex])
+        rightIndex += 1
+    }
+
+    return orderedPile
+}
+
+public func mergeSort(input: [Int]) -> [Int] {
+    guard input.count > 1 else { return input }    // 1
+
+    let middleIndex = input.count / 2              // 2
+
+    let leftArray = mergeSort(input: Array(input[0..<middleIndex]))             // 3
+
+    let rightArray = mergeSort(input: Array(input[middleIndex..<input.count]))  // 4
+
+    return merge(leftPile: leftArray, rightPile: rightArray)             // 5
+}
+
+///////////////////////////////
+/// INSERTION SORT
+///////////////////////////////
+
 public func stackSort (input: [Int]) -> [Int] {
     var sortedArray = [Int]()
 
