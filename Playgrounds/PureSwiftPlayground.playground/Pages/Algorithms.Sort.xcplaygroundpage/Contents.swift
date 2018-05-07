@@ -2,7 +2,7 @@
 
 import Foundation
 
-let inputArray = [Int](0...100).map { _ in Int(arc4random()) }
+let inputArray = [Int](0...10).map { _ in Int(arc4random()) }
 
 execute(name: "Stack", input: inputArray) { (input) -> [Int] in
     return stackSort(input: input)

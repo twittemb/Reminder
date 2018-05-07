@@ -2,6 +2,10 @@
 
 import Foundation
 
+///////////////////////////////
+/// Nombre de facons de monter un escalier
+///////////////////////////////
+
 func climStairs (nbStairs: Int) -> Int {
     if nbStairs == 0 {
         return 0
@@ -24,6 +28,10 @@ func climStairs (nbStairs: Int) -> Int {
 
 print (climStairs(nbStairs: 10))
 
+///////////////////////////////
+/// Tours de Hanoi
+///////////////////////////////
+
 func Hanoi (nbDisks: Int, from: Int, to: Int) {
     guard nbDisks > 0 else { return }
     Hanoi(nbDisks: nbDisks-1, from: from, to: 3-(from+to))
@@ -32,6 +40,10 @@ func Hanoi (nbDisks: Int, from: Int, to: Int) {
 }
 
 Hanoi (nbDisks: 3, from: 0, to: 2)
+
+///////////////////////////////
+/// Fibonacci en recursif
+///////////////////////////////
 
 func fibonacciRecursif (n: Int) -> Int {
 
@@ -48,6 +60,10 @@ func fibonacciRecursif (n: Int) -> Int {
 
 print ("fibonacciRecursif: \(fibonacciRecursif(n: 10))")
 
+///////////////////////////////
+/// Fibonacci en programmation dynamique
+///////////////////////////////
+
 func fibonacciDynamic (n: Int) -> CLong {
     var results = [CLong](0...n)
 
@@ -62,6 +78,10 @@ func fibonacciDynamic (n: Int) -> CLong {
 }
 
 print ("fibonacciDynamic: \(fibonacciDynamic(n: 91))")
+
+///////////////////////////////
+/// Nombre de facon de rendre la monnaie (avec affichage des combinaisons)
+///////////////////////////////
 
 func makeChangeRecursif (target: Int, coins: [Int], currentStackOfCoins: [Int] = [Int]()) -> Int {
 
@@ -94,6 +114,10 @@ func makeChangeRecursif (target: Int, coins: [Int], currentStackOfCoins: [Int] =
 
 }
 print(makeChangeRecursif(target: 15, coins: [-10, 9, 4, -3, 2, 6, 8]))
+
+///////////////////////////////
+/// Nombre de facon de rendre la monnaie (sans affichage des combinaisons) en programmation dynamique
+///////////////////////////////
 
 func countChangeDynamic (value: Int, coins: [Int]) -> Int {
     var ways = [Int](0...value)

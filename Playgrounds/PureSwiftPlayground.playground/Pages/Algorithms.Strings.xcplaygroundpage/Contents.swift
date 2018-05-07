@@ -4,6 +4,10 @@ import Foundation
 
 let input = "06:40:03AM"
 
+///////////////////////////////
+/// Transforme une heure format 12 en format 24
+///////////////////////////////
+
 func to24 (input: String) -> String {
     let timeItems = input.split(separator: ":")
     let hour = timeItems[0]
@@ -29,6 +33,10 @@ func to24 (input: String) -> String {
 }
 
 print (to24(input: input))
+
+///////////////////////////////
+/// Detecte un palindrome en recursif
+///////////////////////////////
 
 func isPalindrome (leftSide: String, rightSide: String) -> Bool {
 
@@ -64,6 +72,10 @@ func palindromeRecursif (input: String) -> Bool {
 
 print (palindromeRecursif(input: "nurrun"))
 
+///////////////////////////////
+/// Detecte un palindrome en iteratif
+///////////////////////////////
+
 func palindromeIteratif (input: String) -> Bool {
 
     let characters = input.map { $0 }
@@ -85,6 +97,10 @@ func palindromeIteratif (input: String) -> Bool {
 }
 
 print (palindromeIteratif(input: "nurun"))
+
+///////////////////////////////
+/// Remplace les occurences de nombre divisibles par 3 par fizz et par 5 par buzz
+///////////////////////////////
 
 func fizzBuzz (input: [Int]) -> String {
     return input.map({ (value) -> String in

@@ -8,11 +8,14 @@ var output = String()
 var occurrence = -1
 var previousCharacter: Character = Character("!")
 
+// on parcours chacun des caracteres
 input.forEach { (character) in
 
     if character == previousCharacter {
+        // caractere identique au precedent -> on incremente l'occurence
         occurrence += 1
     } else {
+        // nouveau caractere -> on ajoute l'occurence au tableau de resultat puis le nouveau caractere et on met son compteur a 1
         if occurrence != -1 {
             output.append("\(occurrence)")
         }
@@ -22,6 +25,7 @@ input.forEach { (character) in
     }
 }
 
+// derniere occurence
 if occurrence != 0 {
     output.append("\(occurrence)")
 }

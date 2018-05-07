@@ -11,6 +11,10 @@ public func execute (name: String, input: [Int], algorithm: ([Int]) -> [Int]) {
     print ("----------------------------------------")
 }
 
+///////////////////////////////
+/// INSERTION SORT
+///////////////////////////////
+
 public func stackSort (input: [Int]) -> [Int] {
     var sortedArray = [Int]()
 
@@ -28,6 +32,10 @@ public func stackSort (input: [Int]) -> [Int] {
     return sortedArray
 }
 
+///////////////////////////////
+/// QUICK SORT
+///////////////////////////////
+
 public func quickSort (input: [Int]) -> [Int] {
 
     if input.count <= 1 {
@@ -41,6 +49,10 @@ public func quickSort (input: [Int]) -> [Int] {
 
     return quickSort(input: lessThanPivot) + equalPivot + quickSort(input: moreThanPivot)
 }
+
+///////////////////////////////
+/// BINARY TREE SORT
+///////////////////////////////
 
 public class Node {
     let value: Int
@@ -87,7 +99,6 @@ public func treeSort (input: [Int]) -> [Int] {
                 } else {
                     let newNode = Node(withValue: input[i])
                     currentNode.leftNode = newNode
-                    currentNode = newNode
                     found = true
                 }
             } else {
@@ -96,7 +107,6 @@ public func treeSort (input: [Int]) -> [Int] {
                 } else {
                     let newNode = Node(withValue: input[i])
                     currentNode.rightNode = newNode
-                    currentNode = newNode
                     found = true
                 }
             }
