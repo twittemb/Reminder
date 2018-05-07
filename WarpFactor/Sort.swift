@@ -9,40 +9,37 @@
 import Foundation
 
 
-func makeChangeRecursif (target: Int, coins: [Int]) -> [[Int]] {
+func makeChangeRecursif (target: Int, coins: [Int], currentStackOfCoins: [Int] = [Int]()) -> Int {
 
     if target < 0 {
-        return [[Int]]()
+        return 0
     }
 
+    var solutions = 0
+
     for i in 0..<coins.count {
+
         let coin = coins[i]
+
         let rest = target - coin
 
-        print ("coins=\(coins) target=\(target) coin=\(coin) rest=\(rest)")
-
         if rest < 0 {
-            let result = [[Int]]()
-            return result
+            continue
         }
 
         if rest == 0 {
-            var result = [[Int]]()
-            result.append([coin])
-            return result
+            solutions += 1
+            print ("1 Solution -> \(currentStackOfCoins+[coin])")
+            continue
         }
 
-        if rest - coin >= coin {
-            var result = [[Int]]()
-            result.append([coin])
-            return result + makeChangeRecursif(target: rest, coins: coins)
+        if rest - coin >= 0 {
+            solutions += makeChangeRecursif(target: rest, coins: Array(coins[i...]), currentStackOfCoins: currentStackOfCoins+[coin])
         } else {
-            var result = [[Int]]()
-            result.append([coin])
-            return result + makeChangeRecursif(target: rest, coins: Array(coins[1...]))
+            solutions += makeChangeRecursif(target: rest, coins: Array(coins[1...]), currentStackOfCoins: currentStackOfCoins+[coin])
         }
     }
 
-    return [[Int]]()
+    return solutions
 
 }

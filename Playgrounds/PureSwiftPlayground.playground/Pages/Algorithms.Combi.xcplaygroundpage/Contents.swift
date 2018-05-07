@@ -65,39 +65,35 @@ print ("fibonacciDynamic: \(fibonacciDynamic(n: 91))")
 
 func makeChangeRecursif (target: Int, coins: [Int], currentStackOfCoins: [Int] = [Int]()) -> Int {
 
-    if target < 0 {
-        return 0
-    }
-
     var solutions = 0
 
     for i in 0..<coins.count {
 
-        let coin = coins[i]
+        let rest = target - coins[i]
 
-        let rest = target - coin
+//        print ("coins=\(coins) target=\(target) coin=\(coin) rest=\(rest)")
 
-        if rest < 0 {
+        if target > 0 && rest < 0 {
             continue
         }
 
         if rest == 0 {
             solutions += 1
-            print ("1 Solution -> \(currentStackOfCoins+[coin])")
+            print ("1 Solution -> \(currentStackOfCoins+[coins[i]])")
             continue
         }
 
-        if rest - coin >= 0 {
-            solutions += makeChangeRecursif(target: rest, coins: Array(coins[i...]), currentStackOfCoins: currentStackOfCoins+[coin])
+        if rest >= target {
+            solutions += makeChangeRecursif(target: rest, coins: Array(coins[(i+1)...]), currentStackOfCoins: currentStackOfCoins+[coins[i]])
         } else {
-            solutions += makeChangeRecursif(target: rest, coins: Array(coins[1...]), currentStackOfCoins: currentStackOfCoins+[coin])
+            solutions += makeChangeRecursif(target: rest, coins: Array(coins[i...]), currentStackOfCoins: currentStackOfCoins+[coins[i]])
         }
     }
 
     return solutions
 
 }
-print(makeChangeRecursif(target: 10, coins: [1, 2, 4].sorted().reversed()))
+print(makeChangeRecursif(target: 15, coins: [-10, 9, 4, -3, 2, 6, 8]))
 
 func countChangeDynamic (value: Int, coins: [Int]) -> Int {
     var ways = [Int](0...value)
